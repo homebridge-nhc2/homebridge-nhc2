@@ -1,0 +1,55 @@
+{
+  "name": "homebridge-nhc2",
+  "version": "1.0.0",
+  "description": "Niko Home Control 2 for Homebridge",
+  "license": "MIT",
+  "keywords": [
+	"Niko Home Control",
+	"homebridge-plugin",
+	"homebridge"
+  ],
+  "repository": {
+	"type": "git",
+	"url": "git://github.com/wvanvlaenderen/homebridge-nhc2.git"
+  },
+  "bugs": {
+	"url": "https://github.com/wvanvlaenderen/homebridge-nhc2/issues"
+  },
+  "engines": {
+	"node": ">=0.12.0",
+	"homebridge": ">=0.2.0"
+  },
+  "main": "dist/index.js",
+  "files": [
+	"dist"
+  ],
+  "dependencies": {
+	"@babel/polyfill": "^7.4.4",
+	"nhc2-hobby-api": "^1.0.0",
+	"rxjs": "^6.5.3",
+	"typescript": "^3.6.4"
+  },
+  "devDependencies": {
+	"@babel/core": "^7.4.5",
+	"@babel/plugin-proposal-class-properties": "^7.4.4",
+	"@babel/preset-env": "^7.4.5",
+	"@babel/preset-typescript": "^7.3.3",
+	"prettier": "^1.18.2",
+	"rollup": "^1.15.4",
+	"rollup-plugin-babel": "^4.3.2",
+	"rollup-plugin-node-resolve": "^5.0.2",
+	"rollup-plugin-replace": "^2.2.0",
+	"rollup-plugin-typescript": "latest",
+	"tslint": "^5.20.1",
+	"tslint-config-prettier": "^1.18.0"
+  },
+  "scripts": {
+	"dev": "rollup -c -w",
+	"build": "rollup -c",
+	"lint": "tslint -p tsconfig.json --fix",
+	"prepare": "npm run build",
+	"preversion": "npm run lint",
+	"version": "npm run format && git add -A src",
+	"postversion": "git push && git push --tags"
+  }
+}

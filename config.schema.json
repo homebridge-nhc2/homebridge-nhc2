@@ -1,0 +1,34 @@
+{
+  "pluginAlias": "NHC2",
+  "pluginType": "accessory",
+  "schema": {
+	"type": "object",
+	"properties": {
+	  "host": {
+		"title": "host",
+		"type": "string",
+		"required": true
+	  },
+	  "port": {
+		"title": "port",
+		"type": "number",
+		"required": false
+	  },
+	  "clientId": {
+		"title": "clientId",
+		"type": "string",
+		"required": false
+	  },
+	  "username": {
+		"title": "username",
+		"type": "string",
+		"required": false
+	  },
+	  "password": {
+		"title": "password",
+		"type": "string",
+		"required": true
+	  }
+	}
+  }
+}

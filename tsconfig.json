@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+	"target": "esnext",
+	"module": "esnext",
+	"moduleResolution": "node",
+	"allowJs": false,
+	"noEmit": true,
+	"strict": true,
+	"isolatedModules": true,
+	"noImplicitAny": false,
+	"esModuleInterop": true,
+	"lib": [
+	  "esnext"
+	]
+  },
+  "include": [
+	"src"
+  ]
+}
