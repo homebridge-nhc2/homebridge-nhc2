@@ -46,6 +46,7 @@
   "scripts": {
 	"dev": "rollup -c -w",
 	"build": "rollup -c",
+	"test": "npm run build",
 	"lint": "tslint -p tsconfig.json --fix",
 	"prepare": "npm run build",
 	"preversion": "npm run lint",
