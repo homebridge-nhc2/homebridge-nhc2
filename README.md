@@ -101,3 +101,29 @@ Add the plugin to the **platforms** section in your homebridge configuration fil
 > If multiple connections with the same ClientId are running these will continuously 
 > disconnect/reconnect and may skip MQTT messages.
 
+## Plugin Development
+
+When working on this plugin, you'll want Homebridge to load it from your development directory instead of publishing it to `npm` each time.
+
+Run this command inside your plugin project folder so your global install of Homebridge can discover it:
+
+
+```shell
+npm link
+```
+
+*You can undo this using the `npm unlink` command.*
+
+Then start Homebridge in debug mode:
+
+```shell
+homebridge -D
+```
+
+This will start up Homebridge and load your in-development plugin. Note that you can also direct Homebridge to load your configuration from somewhere besides the default `~/.homebridge`, for example:
+
+```shell
+homebridge -D -U ./homebridge-dev
+```
+
+This is very useful when you are already using your development machine to host a "real" Homebridge instance (with all your accessories) that you don't want to disturb.
