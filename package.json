@@ -40,6 +40,7 @@
 	"scripts": {
 		"clean": "rimraf ./dist",
 		"build": "rimraf ./dist && tsc",
+		"format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
 		"test": "npm run build",
 		"lint": "tslint -p tsconfig.json --fix",
 		"prepare": "npm run build",
