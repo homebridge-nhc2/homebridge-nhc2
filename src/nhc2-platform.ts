@@ -12,9 +12,9 @@ import {
   PlatformConfig,
   Service,
 } from "homebridge";
-import { NHC2 } from "nhc2-hobby-api/lib/NHC2";
 import { Device } from "nhc2-hobby-api/lib/event/device";
 import { Event } from "nhc2-hobby-api/lib/event/event";
+import { NHC2 } from "nhc2-hobby-api/lib/NHC2";
 
 const PLUGIN_NAME = "homebridge-nhc2";
 const PLATFORM_NAME = "NHC2";
@@ -63,7 +63,7 @@ class NHC2Platform implements DynamicPlatformPlugin {
     });
   }
 
-  configureAccessory(accessory: PlatformAccessory): void {
+  public configureAccessory(accessory: PlatformAccessory): void {
     this.accessories.push(accessory);
   }
 
