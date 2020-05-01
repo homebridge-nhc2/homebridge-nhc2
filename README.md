@@ -20,9 +20,6 @@ You can read the complete history of changes in the
 ## Known Issues
 
 1. Currently we need to set the `rejectUnauthorized` option to false because we are unable to verify the Niko root CA which is not ideal. Feel free to look into this.
-2. The plugin does not support cached accessories, therefor we need to remove the **cachedAccessories** directory before restarting homebridge.
-   
-   `rm -rf ~/.homebridge/accessories/cachedAccessories && homebridge`
 
 ## Project Principles
 
