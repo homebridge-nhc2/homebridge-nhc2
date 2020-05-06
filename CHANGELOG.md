@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.2
+* Added homebridge dependency to support HOOBS
+
+
 ## v1.1.0
 * Added support for cached accessories
 
