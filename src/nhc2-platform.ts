@@ -26,7 +26,7 @@ export = (api: API) => {
   hap = api.hap;
   Accessory = api.platformAccessory;
 
-  api.registerPlatform(PLATFORM_NAME, NHC2Platform);
+  api.registerPlatform(PLUGIN_NAME, PLATFORM_NAME, NHC2Platform);
 };
 
 class NHC2Platform implements DynamicPlatformPlugin {
