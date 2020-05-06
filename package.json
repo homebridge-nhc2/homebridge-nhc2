@@ -26,10 +26,11 @@
 	],
 	"dependencies": {
 		"@types/node": "^13.13.4",
+		"homebridge": "^1.0.3",
+		"homebridge-lib": "^4.6.1",
 		"nhc2-hobby-api": "^1.0.2",
 		"rxjs": "^6.5.5",
-		"typescript": "^3.8.3",
-		"homebridge": "^1.0.3"
+		"typescript": "^3.8.3"
 	},
 	"devDependencies": {
 		"prettier": "^1.19.1",
