@@ -1,6 +1,6 @@
 {
 	"name": "homebridge-nhc2",
-	"version": "1.1.3",
+	"version": "1.2.1",
 	"description": "Niko Home Control 2 support for Homebridge",
 	"license": "MIT",
 	"keywords": [
@@ -26,13 +26,12 @@
 	],
 	"dependencies": {
 		"@types/node": "^13.13.4",
-		"homebridge": "^1.0.3",
-		"homebridge-lib": "^4.6.1",
 		"nhc2-hobby-api": "^1.0.2",
 		"rxjs": "^6.5.5",
 		"typescript": "^3.8.3"
 	},
 	"devDependencies": {
+		"homebridge": "^1.1.0",
 		"prettier": "^1.19.1",
 		"rimraf": "^3.0.2",
 		"tslint": "^5.20.1",

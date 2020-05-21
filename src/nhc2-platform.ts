@@ -30,15 +30,18 @@ export = (api: API) => {
 };
 
 class NHC2Platform implements DynamicPlatformPlugin {
-  private readonly log: Logging;
-  private readonly api: API;
+  private readonly Service: typeof Service = this.api.hap.Service;
+  private readonly Characteristic: typeof Characteristic = this.api.hap
+    .Characteristic;
+
   private readonly accessories: PlatformAccessory[] = [];
   private readonly nhc2: NHC2;
 
-  constructor(log: Logging, config: PlatformConfig, api: API) {
-    this.log = log;
-    this.api = api;
-
+  constructor(
+    private log: Logging,
+    private config: PlatformConfig,
+    private api: API,
+  ) {
     this.nhc2 = new NHC2("mqtts://" + config.host, {
       port: config.port || 8884,
       clientId: config.clientId || "NHC2-homebridge",
@@ -89,7 +92,7 @@ class NHC2Platform implements DynamicPlatformPlugin {
     lights.forEach(light => {
       const newAccessory = new Accessory(light.Name as string, light.Uuid);
 
-      const newService = new Service.Lightbulb(light.Name);
+      const newService = new this.Service.Lightbulb(light.Name);
       this.addStatusChangeCharacteristic(newService, newAccessory);
       newAccessory.addService(newService);
 
@@ -104,7 +107,7 @@ class NHC2Platform implements DynamicPlatformPlugin {
     dimmers.forEach(dimmer => {
       const newAccessory = new Accessory(dimmer.Name as string, dimmer.Uuid);
 
-      const newService = new Service.Lightbulb(dimmer.Name);
+      const newService = new this.Service.Lightbulb(dimmer.Name);
       this.addStatusChangeCharacteristic(newService, newAccessory);
       this.addBrightnessChangeCharacteristic(newService, newAccessory);
       newAccessory.addService(newService);
@@ -145,7 +148,7 @@ class NHC2Platform implements DynamicPlatformPlugin {
     newAccessory: PlatformAccessory,
   ) {
     newService
-      .getCharacteristic(Characteristic.On)
+      .getCharacteristic(this.Characteristic.On)
       .on(
         CharacteristicEventTypes.SET,
         (value: CharacteristicValue, callback: CharacteristicSetCallback) => {
@@ -163,7 +166,7 @@ class NHC2Platform implements DynamicPlatformPlugin {
     newAccessory: PlatformAccessory,
   ) {
     newService
-      .getCharacteristic(Characteristic.Brightness)
+      .getCharacteristic(this.Characteristic.Brightness)
       .on(
         CharacteristicEventTypes.SET,
         (value: CharacteristicValue, callback: CharacteristicSetCallback) => {
@@ -180,14 +183,14 @@ class NHC2Platform implements DynamicPlatformPlugin {
     if (!!device.Properties) {
       device.Properties.forEach(property => {
         if (property.Status === "On") {
-          service.getCharacteristic(Characteristic.On).updateValue(true);
+          service.getCharacteristic(this.Characteristic.On).updateValue(true);
         }
         if (property.Status === "Off") {
-          service.getCharacteristic(Characteristic.On).updateValue(false);
+          service.getCharacteristic(this.Characteristic.On).updateValue(false);
         }
         if (!!property.Brightness) {
           service
-            .getCharacteristic(Characteristic.Brightness)
+            .getCharacteristic(this.Characteristic.Brightness)
             .updateValue(property.Brightness);
         }
       });
