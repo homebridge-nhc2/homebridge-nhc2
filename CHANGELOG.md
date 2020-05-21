@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.2.0
+* Move homebridge to dev dependencies
+
 ## v1.1.3
 * Added homebridge dependency to support HOOBS
 
