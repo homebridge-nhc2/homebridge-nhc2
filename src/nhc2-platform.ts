@@ -37,8 +37,6 @@ class NHC2Platform implements DynamicPlatformPlugin {
     this.log = log;
     this.api = api;
 
-    log.info("NHC2Platform TESTINGGGGG!");
-
     this.nhc2 = new NHC2("mqtts://" + config.host, {
       port: config.port || 8884,
       clientId: config.clientId || "NHC2-homebridge",
@@ -46,6 +44,8 @@ class NHC2Platform implements DynamicPlatformPlugin {
       password: config.password,
       rejectUnauthorized: false,
     });
+
+    log.info("NHC2Platform finished initializing!");
 
     api.on(APIEvent.DID_FINISH_LAUNCHING, async () => {
       log.info("NHC2Platform 'didFinishLaunching'");
