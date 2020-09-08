@@ -208,7 +208,7 @@ class NHC2Platform implements DynamicPlatformPlugin {
       .on(
         CharacteristicEventTypes.SET,
         (value: CharacteristicValue, callback: CharacteristicSetCallback) => {
-          this.nhc2.sendFreeStartStopCommand(
+          this.nhc2.sendTriggerBasicStateCommand(
             newAccessory.UUID
           );
           callback();
