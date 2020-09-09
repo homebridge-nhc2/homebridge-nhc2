@@ -60,6 +60,7 @@ class NHC2Platform implements DynamicPlatformPlugin {
       this.addLights(nhc2Accessories);
       this.addDimmers(nhc2Accessories);
       this.addOutlets(nhc2Accessories);
+      this.addGenericSwitches(nhc2Accessories);
 
       this.nhc2.getEvents().subscribe(event => {
         this.processEvent(event);
@@ -72,16 +73,18 @@ class NHC2Platform implements DynamicPlatformPlugin {
   }
 
   public processEvent = (event: Event) => {
-    event.Params.flatMap(param =>
-      param.Devices.forEach((device: Device) => {
-        const deviceAccessoryForEvent = this.findAccessoryDevice(device);
-        if (!!deviceAccessoryForEvent) {
-          deviceAccessoryForEvent.services.forEach(service =>
-            this.processDeviceProperties(device, service),
-          );
-        }
-      }),
-    );
+    if(!!event.Params) {
+      event.Params.flatMap(param =>
+        param.Devices.forEach((device: Device) => {
+          const deviceAccessoryForEvent = this.findAccessoryDevice(device);
+          if (!!deviceAccessoryForEvent) {
+            deviceAccessoryForEvent.services.forEach(service =>
+              this.processDeviceProperties(device, service),
+            );
+          }
+        }),
+      );
+    }
   };
 
   private findAccessoryDevice(device: Device) {
@@ -129,6 +132,19 @@ class NHC2Platform implements DynamicPlatformPlugin {
       newAccessory.addService(newService);
 
       this.processDeviceProperties(outlet, newService);
+    });
+  }
+
+  private addGenericSwitches(accessories: Device[]) {
+    const genericSwitches = accessories.filter(acc => acc.Model === "generic");
+    genericSwitches.forEach(genericDevice => {
+      const newAccessory = new Accessory(genericDevice.Name as string, genericDevice.Uuid);
+
+      const newService = new this.Service.Switch(genericDevice.Name);
+      this.addTriggerCharacteristic(newService, newAccessory);
+      newAccessory.addService(newService);
+
+      this.processDeviceProperties(genericDevice, newService);
 
       this.registerAccessory(newAccessory);
     });
@@ -195,13 +211,39 @@ class NHC2Platform implements DynamicPlatformPlugin {
       );
   }
 
+
+
+  private addTriggerCharacteristic(
+    newService: Service,
+    newAccessory: PlatformAccessory,
+  ) {
+    newService
+      .getCharacteristic(this.Characteristic.On)
+      .on(
+        CharacteristicEventTypes.SET,
+        (value: CharacteristicValue, callback: CharacteristicSetCallback) => {
+          this.nhc2.sendTriggerBasicStateCommand(
+            newAccessory.UUID
+          );
+          callback();
+        },
+      );
+  }
+
   private processDeviceProperties(device: Device, service: Service) {
     if (!!device.Properties) {
+
       device.Properties.forEach(property => {
         if (property.Status === "On") {
           service.getCharacteristic(this.Characteristic.On).updateValue(true);
         }
         if (property.Status === "Off") {
+          service.getCharacteristic(this.Characteristic.On).updateValue(false);
+        }
+        if (property.BasicState === "On") {
+          service.getCharacteristic(this.Characteristic.On).updateValue(true);
+        }
+        if (property.BasicState === "Off") {
           service.getCharacteristic(this.Characteristic.On).updateValue(false);
         }
         if (!!property.Brightness) {
@@ -212,4 +254,6 @@ class NHC2Platform implements DynamicPlatformPlugin {
       });
     }
   }
+
+
 }
