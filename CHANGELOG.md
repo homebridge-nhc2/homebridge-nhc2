@@ -2,6 +2,7 @@
 
 ## v1.3.1
 * Fixed a bug causing the service to crash when processing events without parameters
+
 ## v1.3.0
 * Added actions
     * toggle basic state change on generic devices (free start stop actions)
