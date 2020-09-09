@@ -59,6 +59,7 @@ class NHC2Platform implements DynamicPlatformPlugin {
       const nhc2Accessories = await this.nhc2.getAccessories();
       this.addLights(nhc2Accessories);
       this.addDimmers(nhc2Accessories);
+      this.addOutlets(nhc2Accessories);
       this.addGenericSwitches(nhc2Accessories);
 
       this.nhc2.getEvents().subscribe(event => {
@@ -118,6 +119,19 @@ class NHC2Platform implements DynamicPlatformPlugin {
       this.processDeviceProperties(dimmer, newService);
 
       this.registerAccessory(newAccessory);
+    });
+  }
+
+  private addOutlets(accessories: Device[]) {
+    const outlets = accessories.filter(outlet => outlet.Model === "socket");
+    outlets.forEach(outlet => {
+      const newAccessory = new Accessory(outlet.Name as string, outlet.Uuid);
+
+      const newService = new this.Service.Outlet(outlet.Name);
+      this.addStatusChangeCharacteristic(newService, newAccessory);
+      newAccessory.addService(newService);
+
+      this.processDeviceProperties(outlet, newService);
     });
   }
 
