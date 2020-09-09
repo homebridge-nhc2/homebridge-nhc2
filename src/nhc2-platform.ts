@@ -109,7 +109,6 @@ class NHC2Platform implements DynamicPlatformPlugin {
           this.addStatusChangeCharacteristic
         ]
       },
-      ,
       generic : {
         service : this.Service.Switch,
         handlers : [
@@ -131,6 +130,7 @@ class NHC2Platform implements DynamicPlatformPlugin {
         this.processDeviceProperties(acc, newService);
         this.registerAccessory(newAccessory);
       });
+    });
   }
 
   private registerAccessory(accessory: PlatformAccessory) {
