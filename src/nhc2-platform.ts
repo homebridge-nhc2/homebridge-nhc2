@@ -70,16 +70,18 @@ class NHC2Platform implements DynamicPlatformPlugin {
   }
 
   public processEvent = (event: Event) => {
-    event.Params.flatMap(param =>
-      param.Devices.forEach((device: Device) => {
-        const deviceAccessoryForEvent = this.findAccessoryDevice(device);
-        if (!!deviceAccessoryForEvent) {
-          deviceAccessoryForEvent.services.forEach(service =>
-            this.processDeviceProperties(device, service),
-          );
-        }
-      }),
-    );
+    if(!!event.Params) {
+      event.Params.flatMap(param =>
+          param.Devices.forEach((device: Device) => {
+            const deviceAccessoryForEvent = this.findAccessoryDevice(device);
+            if (!!deviceAccessoryForEvent) {
+              deviceAccessoryForEvent.services.forEach(service =>
+                  this.processDeviceProperties(device, service),
+              );
+            }
+          }),
+      );
+    }
   };
 
   private findAccessoryDevice(device: Device) {
