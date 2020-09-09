@@ -57,10 +57,7 @@ class NHC2Platform implements DynamicPlatformPlugin {
 
       await this.nhc2.subscribe();
       const nhc2Accessories = await this.nhc2.getAccessories();
-      this.addLights(nhc2Accessories);
-      this.addDimmers(nhc2Accessories);
-      this.addOutlets(nhc2Accessories);
-      this.addGenericSwitches(nhc2Accessories);
+      this.addAccessories(nhc2Accessories);
 
       this.nhc2.getEvents().subscribe(event => {
         this.processEvent(event);
@@ -91,63 +88,49 @@ class NHC2Platform implements DynamicPlatformPlugin {
     return this.accessories.find(accessory => accessory.UUID === device.Uuid);
   }
 
-  private addLights(accessories: Device[]) {
-    const lights = accessories.filter(light => light.Model === "light");
-    lights.forEach(light => {
-      const newAccessory = new Accessory(light.Name as string, light.Uuid);
+  private addAccessories(accessories: Device[]) {
+    const mapping : { [index: string]: any } = {
+      light : {
+        service : this.Service.Lightbulb,
+        handlers : [
+          this.addStatusChangeCharacteristic
+        ]
+      },
+      dimmer : {
+        service : this.Service.Lightbulb,
+        handlers : [
+          this.addStatusChangeCharacteristic,
+          this.addBrightnessChangeCharacteristic
+        ]
+      },
+      socket : {
+        service : this.Service.Outlet,
+        handlers : [
+          this.addStatusChangeCharacteristic
+        ]
+      },
+      ,
+      generic : {
+        service : this.Service.Switch,
+        handlers : [
+          this.addTriggerCharacteristic
+        ]
+      }
+    };
 
-      const newService = new this.Service.Lightbulb(light.Name);
-      this.addStatusChangeCharacteristic(newService, newAccessory);
-      newAccessory.addService(newService);
-
-      this.processDeviceProperties(light, newService);
-
-      this.registerAccessory(newAccessory);
-    });
-  }
-
-  private addDimmers(accessories: Device[]) {
-    const dimmers = accessories.filter(light => light.Model === "dimmer");
-    dimmers.forEach(dimmer => {
-      const newAccessory = new Accessory(dimmer.Name as string, dimmer.Uuid);
-
-      const newService = new this.Service.Lightbulb(dimmer.Name);
-      this.addStatusChangeCharacteristic(newService, newAccessory);
-      this.addBrightnessChangeCharacteristic(newService, newAccessory);
-      newAccessory.addService(newService);
-
-      this.processDeviceProperties(dimmer, newService);
-
-      this.registerAccessory(newAccessory);
-    });
-  }
-
-  private addOutlets(accessories: Device[]) {
-    const outlets = accessories.filter(outlet => outlet.Model === "socket");
-    outlets.forEach(outlet => {
-      const newAccessory = new Accessory(outlet.Name as string, outlet.Uuid);
-
-      const newService = new this.Service.Outlet(outlet.Name);
-      this.addStatusChangeCharacteristic(newService, newAccessory);
-      newAccessory.addService(newService);
-
-      this.processDeviceProperties(outlet, newService);
-    });
-  }
-
-  private addGenericSwitches(accessories: Device[]) {
-    const genericSwitches = accessories.filter(acc => acc.Model === "generic");
-    genericSwitches.forEach(genericDevice => {
-      const newAccessory = new Accessory(genericDevice.Name as string, genericDevice.Uuid);
-
-      const newService = new this.Service.Switch(genericDevice.Name);
-      this.addTriggerCharacteristic(newService, newAccessory);
-      newAccessory.addService(newService);
-
-      this.processDeviceProperties(genericDevice, newService);
-
-      this.registerAccessory(newAccessory);
-    });
+    Object.keys(mapping).forEach(model => {
+      const config = mapping[model];
+      const accs = accessories.filter(acc => acc.Model === model);
+      accs.forEach(acc => {
+        const newAccessory = new Accessory(acc.Name as string, acc.Uuid);
+        const newService   = new config.service(acc.Name);
+        config.handlers.forEach((handler : Function) => {
+          handler(newService, newAccessory);
+        });
+        newAccessory.addService(newService);
+        this.processDeviceProperties(acc, newService);
+        this.registerAccessory(newAccessory);
+      });
   }
 
   private registerAccessory(accessory: PlatformAccessory) {
@@ -175,10 +158,8 @@ class NHC2Platform implements DynamicPlatformPlugin {
       .find(() => true);
   }
 
-  private addStatusChangeCharacteristic(
-    newService: Service,
-    newAccessory: PlatformAccessory,
-  ) {
+  private addStatusChangeCharacteristic = 
+  ( newService: Service, newAccessory: PlatformAccessory ) => {
     newService
       .getCharacteristic(this.Characteristic.On)
       .on(
@@ -191,12 +172,10 @@ class NHC2Platform implements DynamicPlatformPlugin {
           callback();
         },
       );
-  }
+  };
 
-  private addBrightnessChangeCharacteristic(
-    newService: Service,
-    newAccessory: PlatformAccessory,
-  ) {
+  private addBrightnessChangeCharacteristic =
+  ( newService: Service, newAccessory: PlatformAccessory ) => {
     newService
       .getCharacteristic(this.Characteristic.Brightness)
       .on(
@@ -209,14 +188,10 @@ class NHC2Platform implements DynamicPlatformPlugin {
           callback();
         },
       );
-  }
+  };
 
-
-
-  private addTriggerCharacteristic(
-    newService: Service,
-    newAccessory: PlatformAccessory,
-  ) {
+  private addTriggerCharacteristic =
+    ( newService: Service, newAccessory: PlatformAccessory ) => {
     newService
       .getCharacteristic(this.Characteristic.On)
       .on(
