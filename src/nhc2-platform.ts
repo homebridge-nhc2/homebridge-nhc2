@@ -47,7 +47,7 @@ class NHC2Platform implements DynamicPlatformPlugin {
     private api: API,
   ) {
     this.log = new NHC2Logger(logger, config);
-
+    this.config = config;
     this.nhc2 = new NHC2("mqtts://" + config.host, {
       port: config.port || 8884,
       clientId: config.clientId || "NHC2-homebridge",
@@ -120,7 +120,11 @@ class NHC2Platform implements DynamicPlatformPlugin {
 
     Object.keys(mapping).forEach(model => {
       const config = mapping[model];
-      const accs = accessories.filter(acc => acc.Model === model);
+      const accs = accessories.filter(acc =>
+        ! this.config.suppressedAccessories.includes(acc.Uuid)
+        &&
+        acc.Model === model
+      );
       accs.forEach(acc => {
         const newAccessory = new Accessory(acc.Name as string, acc.Uuid);
         const newService = new config.service(acc.Name);
