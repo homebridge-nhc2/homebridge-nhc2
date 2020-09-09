@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.3.0
+* Added actions
+    * toggle basic state change on generic devices (free start stop actions)
+    * change position (e.g. of sunblinds)
+
 ## v1.2.0
 * Move homebridge to dev dependencies
 
