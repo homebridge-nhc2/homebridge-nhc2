@@ -88,22 +88,22 @@ class NHC2Platform implements DynamicPlatformPlugin {
 
   private addAccessories(accessories: Device[]) {
     const mapping : { [index: string]: any } = {
-      "light" : {
-        "service" : this.Service.Lightbulb,
-        "handlers" : [
+      light : {
+        service : this.Service.Lightbulb,
+        handlers : [
           this.addStatusChangeCharacteristic
         ]
       },
-      "dimmer" : {
-        "service" : this.Service.Lightbulb,
-        "handlers" : [
+      dimmer : {
+        service : this.Service.Lightbulb,
+        handlers : [
           this.addStatusChangeCharacteristic,
           this.addBrightnessChangeCharacteristic
         ]
       },
-      "socket" : {
-        "service" : this.Service.Outlet,
-        "handlers" : [
+      socket : {
+        service : this.Service.Outlet,
+        handlers : [
           this.addStatusChangeCharacteristic
         ]
       }
@@ -114,8 +114,8 @@ class NHC2Platform implements DynamicPlatformPlugin {
       const accs = accessories.filter(acc => acc.Model === model);
       accs.forEach(acc => {
         const newAccessory = new Accessory(acc.Name as string, acc.Uuid);
-        const newService   = new config["service"](acc.Name);
-        config["handlers"].forEach((handler : Function) => {
+        const newService   = new config.service(acc.Name);
+        config.handlers.forEach((handler : Function) => {
           handler(newService, newAccessory);
         });
         newAccessory.addService(newService);
