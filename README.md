@@ -100,7 +100,29 @@ Add the plugin to the **platforms** section in your homebridge configuration fil
 
 ### More Configuration Options
 
+#### Verbose Logging
+
 Another configuration option is de `verbose` switch. It cranks up the information that is published to the logs. This is still at an informational level and can help in detecting anomalies. To really see debugging level details, run homebridge with the `-D` switch.
+
+#### Suppressing Accessories
+
+Besides the required `host` & `password` and other connection-related configuraion options, the configuration also allows for suppressing accessories:
+
+```json
+  "platforms": [
+    {
+      "platform" : "NHC2",
+      "name" : "NHC2",
+      "host": "<IP_ADDRESS_OF_YOUR_CONNECTED_CONTROLLER>",
+      "password": "<PASSWORD_PROVIDED_BY_MYNIKOHOMECONTROLL>",
+      "suppressedAccessories": [
+          "fa33d687-9225-4f9e-b55e-013abb69b42e"
+      ]
+    }
+  ]
+```
+
+This allows for not exposing certain accessories to Homebrigde (and therefore also the Home app). This feature can be useful when sharing access to the Home app with others. 
 
 ## Plugin Development
 
