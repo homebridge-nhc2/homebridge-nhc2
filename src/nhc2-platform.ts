@@ -144,7 +144,13 @@ class NHC2Platform implements DynamicPlatformPlugin {
     this.api.registerPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [
       accessory,
     ]);
-    this.log.debug("registered accessory: " + accessory.displayName + " ("+ accessory.UUID +")");
+    this.log.debug(
+      "registered accessory: " +
+        accessory.displayName +
+        " (" +
+        accessory.UUID +
+        ")",
+    );
   }
 
   private unregisterAccessory(accessory: PlatformAccessory) {
@@ -152,7 +158,13 @@ class NHC2Platform implements DynamicPlatformPlugin {
       accessory,
     ]);
     this.accessories.splice(this.accessories.indexOf(accessory), 1);
-    this.log.debug("unregistered accessory: " + accessory.displayName + " ("+ accessory.UUID +")");
+    this.log.debug(
+      "unregistered accessory: " +
+        accessory.displayName +
+        " (" +
+        accessory.UUID +
+        ")",
+    );
   }
 
   private findExistingAccessory(newAccessory: PlatformAccessory) {
