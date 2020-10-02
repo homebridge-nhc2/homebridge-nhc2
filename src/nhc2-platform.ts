@@ -16,6 +16,8 @@ import { Device } from "nhc2-hobby-api/lib/event/device";
 import { Event } from "nhc2-hobby-api/lib/event/event";
 import { NHC2 } from "nhc2-hobby-api/lib/NHC2";
 
+import { NHC2Logger } from "./nhc2-logger";
+
 const PLUGIN_NAME = "homebridge-nhc2";
 const PLATFORM_NAME = "NHC2";
 
@@ -37,11 +39,15 @@ class NHC2Platform implements DynamicPlatformPlugin {
   private readonly accessories: PlatformAccessory[] = [];
   private readonly nhc2: NHC2;
 
+  private readonly log: NHC2Logger;
+
   constructor(
-    private log: Logging,
+    private logger: Logging,
     private config: PlatformConfig,
     private api: API,
   ) {
+    this.log = new NHC2Logger(logger, config);
+
     this.nhc2 = new NHC2("mqtts://" + config.host, {
       port: config.port || 8884,
       clientId: config.clientId || "NHC2-homebridge",
@@ -50,13 +56,14 @@ class NHC2Platform implements DynamicPlatformPlugin {
       rejectUnauthorized: false,
     });
 
-    log.info("NHC2Platform finished initializing!");
+    this.log.info("NHC2Platform finished initializing!");
 
     api.on(APIEvent.DID_FINISH_LAUNCHING, async () => {
-      log.info("NHC2Platform 'didFinishLaunching'");
+      this.log.info("NHC2Platform 'didFinishLaunching'");
 
       await this.nhc2.subscribe();
       const nhc2Accessories = await this.nhc2.getAccessories();
+      this.log.verbose("got " + nhc2Accessories.length + " accessories");
       this.addAccessories(nhc2Accessories);
 
       this.nhc2.getEvents().subscribe(event => {
@@ -137,6 +144,7 @@ class NHC2Platform implements DynamicPlatformPlugin {
     this.api.registerPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [
       accessory,
     ]);
+    this.log.debug("registered accessory: " + accessory.displayName + " ("+ accessory.UUID +")");
   }
 
   private unregisterAccessory(accessory: PlatformAccessory) {
@@ -144,6 +152,7 @@ class NHC2Platform implements DynamicPlatformPlugin {
       accessory,
     ]);
     this.accessories.splice(this.accessories.indexOf(accessory), 1);
+    this.log.debug("unregistered accessory: " + accessory.displayName + " ("+ accessory.UUID +")");
   }
 
   private findExistingAccessory(newAccessory: PlatformAccessory) {
