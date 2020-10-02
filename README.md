@@ -98,6 +98,10 @@ Add the plugin to the **platforms** section in your homebridge configuration fil
 > If multiple connections with the same ClientId are running these will continuously 
 > disconnect/reconnect and may skip MQTT messages.
 
+### More Configuration Options
+
+Another configuration option is de `verbose` switch. It cranks up the information that is published to the logs. This is still at an informational level and can help in detecting anomalies. To really see debugging level details, run homebridge with the `-D` switch.
+
 ## Plugin Development
 
 When working on this plugin, you'll want Homebridge to load it from your development directory instead of publishing it to `npm` each time.
