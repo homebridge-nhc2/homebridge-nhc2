@@ -51,8 +51,9 @@ class NHC2Platform implements DynamicPlatformPlugin {
     this.suppressedAccessories = config.suppressedAccessories || [];
     if(this.suppressedAccessories) {
       this.log.info("Suppressing accessories: ");
+      var self = this;
       this.suppressedAccessories.forEach(function(acc) {
-        this.log.info("  - " + acc);
+        self.log.info("  - " + acc);
       });
     }
     this.nhc2 = new NHC2("mqtts://" + config.host, {
