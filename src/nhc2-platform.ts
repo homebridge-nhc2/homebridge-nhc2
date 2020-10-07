@@ -49,9 +49,9 @@ class NHC2Platform implements DynamicPlatformPlugin {
   ) {
     this.log = new NHC2Logger(logger, config);
     this.suppressedAccessories = config.suppressedAccessories || [];
-    if(this.suppressedAccessories) {
+    if (this.suppressedAccessories) {
       this.log.info("Suppressing accessories: ");
-      this.suppressedAccessories.forEach((acc) => {
+      this.suppressedAccessories.forEach(acc => {
         this.log.info("  - " + acc);
       });
     }
@@ -127,10 +127,9 @@ class NHC2Platform implements DynamicPlatformPlugin {
 
     Object.keys(mapping).forEach(model => {
       const config = mapping[model];
-      const accs = accessories.filter(acc =>
-        ! this.suppressedAccessories.includes(acc.Uuid)
-        &&
-        acc.Model === model
+      const accs = accessories.filter(
+        acc =>
+          !this.suppressedAccessories.includes(acc.Uuid) && acc.Model === model,
       );
       accs.forEach(acc => {
         const newAccessory = new Accessory(acc.Name as string, acc.Uuid);
