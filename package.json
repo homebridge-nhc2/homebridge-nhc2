@@ -1,6 +1,6 @@
 {
 	"name": "homebridge-nhc2",
-	"version": "1.2.1",
+	"version": "1.5.1",
 	"description": "Niko Home Control 2 support for Homebridge",
 	"license": "MIT",
 	"keywords": [
@@ -41,7 +41,7 @@
 		"clean": "rimraf ./dist",
 		"build": "rimraf ./dist && tsc",
 		"format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
-		"test": "npm run build",
+		"test": "tslint -p tsconfig.json && npm run build",
 		"lint": "tslint -p tsconfig.json --fix",
 		"prepare": "npm run build",
 		"preversion": "npm run lint",

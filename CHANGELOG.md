@@ -1,5 +1,16 @@
 # Changelog
 
+## v1.5.1
+* Added support for suppressing accessories
+
+## v1.3.1
+* Fixed a bug causing the service to crash when processing events without parameters
+
+## v1.3.0
+* Added actions
+    * toggle basic state change on generic devices (free start stop actions)
+    * change position (e.g. of sunblinds)
+
 ## v1.2.0
 * Move homebridge to dev dependencies
 
