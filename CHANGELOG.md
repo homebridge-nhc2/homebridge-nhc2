@@ -3,6 +3,9 @@
 ## v1.6.0
 * Added support for Ventilation unit
 
+## v1.5.2
+* Fixed a bug with switches not being updated in homebridge
+
 ## v1.5.1
 * Added support for suppressing accessories
 
