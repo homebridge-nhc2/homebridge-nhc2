@@ -14,6 +14,7 @@ import {
 } from "homebridge";
 import { Device } from "nhc2-hobby-api/lib/event/device";
 import { Event } from "nhc2-hobby-api/lib/event/event";
+import { FanSpeed } from "nhc2-hobby-api/lib/event/FanSpeed";
 import { NHC2 } from "nhc2-hobby-api/lib/NHC2";
 
 import { NHC2Logger } from "./nhc2-logger";
@@ -123,6 +124,10 @@ class NHC2Platform implements DynamicPlatformPlugin {
         service: this.Service.Switch,
         handlers: [this.addTriggerCharacteristic],
       },
+      fan: {
+        service: this.Service.Fanv2,
+        handlers: [this.addFanSpeedCharacteristic]
+      }
     };
 
     Object.keys(mapping).forEach(model => {
@@ -234,6 +239,29 @@ class NHC2Platform implements DynamicPlatformPlugin {
       );
   };
 
+  private addFanSpeedCharacteristic = (
+    newService: Service,
+    newAccessory: PlatformAccessory,
+  ) => {
+    newService
+      .getCharacteristic(this.Characteristic.Active)
+      .setProps({
+        minValue: 1
+      })
+    newService
+      .getCharacteristic(this.Characteristic.RotationSpeed)
+      .on(
+        CharacteristicEventTypes.SET,
+        (value: CharacteristicValue, callback: CharacteristicSetCallback) => {
+          const fanSpeed: FanSpeed = this.getFanSpeed(value as number)
+          this.nhc2.sendFanSpeedCommand(newAccessory.UUID, fanSpeed);
+          callback();
+        },
+      );
+  };
+
+
+
   private processDeviceProperties(device: Device, service: Service) {
     if (!!device.Properties) {
       device.Properties.forEach(property => {
@@ -243,6 +271,10 @@ class NHC2Platform implements DynamicPlatformPlugin {
         if (property.Status === "Off" || property.BasicState === "Off") {
           service.getCharacteristic(this.Characteristic.On).updateValue(false);
         }
+        if(!!property.FanSpeed) {
+          service.getCharacteristic(this.Characteristic.RotationSpeed).updateValue(this.getSpeed(property.FanSpeed))
+          service.getCharacteristic(this.Characteristic.Active).setValue(1);
+        }
         if (!!property.Brightness) {
           service
             .getCharacteristic(this.Characteristic.Brightness)
@@ -250,5 +282,30 @@ class NHC2Platform implements DynamicPlatformPlugin {
         }
       });
     }
+  }
+
+  private getSpeed(speed: FanSpeed) {
+    if (speed === FanSpeed.Low) {
+      return 25;
+    } else if (speed === FanSpeed.Medium) {
+      return 50;
+    } else if(speed === FanSpeed.High) {
+      return 75;
+    } else if(speed === FanSpeed.Boost) {
+      return 100;
+    }
+    return 0;
+  }
+  private getFanSpeed(value: number): FanSpeed {
+    if(value >= 0 && value <= 25) {
+      return FanSpeed.Low;
+    } else if(value > 25 && value <= 50) {
+      return FanSpeed.Medium;
+    }else if(value > 50 && value <= 75) {
+      return FanSpeed.High;
+    }else if(value > 75 && value <= 100) {
+      return FanSpeed.Boost;
+    }
+    return FanSpeed.Low;
   }
 }
