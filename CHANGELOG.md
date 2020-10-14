@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.6.0
+* Added support for Ventilation unit
+
 ## v1.5.1
 * Added support for suppressing accessories
 
