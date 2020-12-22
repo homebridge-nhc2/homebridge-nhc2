@@ -150,3 +150,10 @@ homebridge -D -U ./homebridge-dev
 ```
 
 This is very useful when you are already using your development machine to host a "real" Homebridge instance (with all your accessories) that you don't want to disturb.
+
+# Releasing a new version
+To release a new version it is sufficient to bump the version number, and make sure to push the tagged commit.
+Travis CI will recognize the tagged commit and publish the package to npmjs.
+```bash
+    npm version 2.0.0
+```
