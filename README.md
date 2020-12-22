@@ -64,7 +64,7 @@ intervention of professionals of which costs cannot be returned by the project t
 
 In order to use the plugin you must first download and install it globally.
 
-    npm install -g homebridge-nhc2
+    npm install -g @homebridge-nhc2/homebridge-nhc2
 
 You may also install directly from the GitHub 
 [source](https://github.com/homebridge-nhc2/homebridge-nhc2). Either download and unzip 
