@@ -1,9 +1,9 @@
 # homebridge-nhc2
-[![Version](http://img.shields.io/npm/v/homebridge-nhc2.png)](https://www.npmjs.org/package/homebridge-nhc2)
-[![License](https://img.shields.io/npm/l/homebridge-nhc2.svg)](https://github.com/wvanvlaenderen/homebridge-nhc2/blob/master/LICENSE)
-[![Downloads](https://img.shields.io/npm/dt/homebridge-nhc2.svg)](https://www.npmjs.org/package/homebridge-nhc2)
-[![Build Status](https://travis-ci.org/wvanvlaenderen/homebridge-nhc2.svg?branch=master)](https://travis-ci.org/wvanvlaenderen/homebridge-nhc2)
-[![Dependencies](https://david-dm.org/wvanvlaenderen/homebridge-nhc2.svg)](https://david-dm.org/wvanvlaenderen/homebridge-nhc2)
+[![Version](http://img.shields.io/npm/v/@homebridge-nhc2/homebridge-nhc2.png)](https://www.npmjs.org/package/@homebridge-nhc2/homebridge-nhc2)
+[![License](https://img.shields.io/npm/l/@homebridge-nhc2/homebridge-nhc2.svg)](https://github.com/homebridge-nhc2/homebridge-nhc2/blob/master/LICENSE)
+[![Downloads](https://img.shields.io/npm/dt/@homebridge-nhc2/homebridge-nhc2.svg)](https://www.npmjs.org/package/@homebridge-nhc2/homebridge-nhc2)
+[![Build Status](https://travis-ci.org/homebridge-nhc2/homebridge-nhc2.svg?branch=master)](https://travis-ci.org/homebridge-nhc2/homebridge-nhc2)
+[![Dependencies](https://david-dm.org/homebridge-nhc2/homebridge-nhc2.svg)](https://david-dm.org/homebridge-nhc2/homebridge-nhc2)
 
 As of October 29, 2019 Niko has published their [Hobby API](https://www.niko.eu/en/campaign/niko-home-control/hobby-api) which allows end users to control their Niko Home Control 2 installation through the MQTT protocol.
 This homebridge plugin adds homekit support for a Niko Home Control 2 having the Hobby API defined as a connected service.
@@ -15,7 +15,7 @@ Supported actions include:
 ## Changes
 
 You can read the complete history of changes in the 
-[CHANGELOG](https://github.com/wvanvlaenderen/homebridge-nhc2/blob/master/CHANGELOG.md).
+[CHANGELOG](https://github.com/homebridge-nhc2/homebridge-nhc2/blob/master/CHANGELOG.md).
 
 ## Known Issues
 
@@ -34,7 +34,7 @@ following common conventions.
 ## Contributing
 
 Contributions are welcome, particularly bug fixes and enhancements!
-Refer to our [Contribution Guidelines](https://github.com/wvanvlaenderen/homebridge-nhc2/blob/master/CONTRIBUTING.md) for details.
+Refer to our [Contribution Guidelines](https://github.com/homebridge-nhc2/homebridge-nhc2/blob/master/CONTRIBUTING.md) for details.
 
 > Please note that Project owners reserve the right to accept or reject any PR
 > for any reason.
@@ -43,7 +43,7 @@ Refer to our [Contribution Guidelines](https://github.com/wvanvlaenderen/homebri
 
 Before contributing or participating in the homebridge-nhc2 community please be sure to 
 familiarize yourself with our project 
-[CODE OF CONDUCT](https://github.com/wvanvlaenderen/homebridge-nhc2/blob/master/CODE_OF_CONDUCT.md). 
+[CODE OF CONDUCT](https://github.com/homebridge-nhc2/homebridge-nhc2/blob/master/CODE_OF_CONDUCT.md). 
 These guidelines are intended to govern interactions with and within the homebridge-nhc2 
 community.
 
@@ -67,7 +67,7 @@ In order to use the plugin you must first download and install it globally.
     npm install -g homebridge-nhc2
 
 You may also install directly from the GitHub 
-[source](https://github.com/wvanvlaenderen/homebridge-nhc2). Either download and unzip 
+[source](https://github.com/homebridge-nhc2/homebridge-nhc2). Either download and unzip 
 the source, or clone the repository. Run the build command and pass the **-P** flag to homebridge to be able to locate the plugin.
 
 ## Connecting the Hobby API

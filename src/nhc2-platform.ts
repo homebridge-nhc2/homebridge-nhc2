@@ -12,9 +12,9 @@ import {
   PlatformConfig,
   Service,
 } from "homebridge";
-import { Device } from "nhc2-hobby-api/lib/event/device";
-import { Event } from "nhc2-hobby-api/lib/event/event";
-import { NHC2 } from "nhc2-hobby-api/lib/NHC2";
+import { Device } from "@homebridge-nhc2/nhc2-hobby-api/lib/event/device";
+import { Event } from "@homebridge-nhc2/nhc2-hobby-api/lib/event/event";
+import { NHC2 } from "@homebridge-nhc2/nhc2-hobby-api/lib/NHC2";
 
 import { NHC2Logger } from "./nhc2-logger";
 
