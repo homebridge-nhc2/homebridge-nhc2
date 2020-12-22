@@ -2,7 +2,7 @@
 [![Version](http://img.shields.io/npm/v/@homebridge-nhc2/homebridge-nhc2.png)](https://www.npmjs.org/package/@homebridge-nhc2/homebridge-nhc2)
 [![License](https://img.shields.io/npm/l/@homebridge-nhc2/homebridge-nhc2.svg)](https://github.com/homebridge-nhc2/homebridge-nhc2/blob/master/LICENSE)
 [![Downloads](https://img.shields.io/npm/dt/@homebridge-nhc2/homebridge-nhc2.svg)](https://www.npmjs.org/package/@homebridge-nhc2/homebridge-nhc2)
-[![Build Status](https://travis-ci.org/homebridge-nhc2/homebridge-nhc2.svg?branch=master)](https://travis-ci.org/homebridge-nhc2/homebridge-nhc2)
+[![Build Status](https://travis-ci.com/homebridge-nhc2/homebridge-nhc2.svg?branch=master)](https://travis-ci.org/homebridge-nhc2/homebridge-nhc2)
 [![Dependencies](https://david-dm.org/homebridge-nhc2/homebridge-nhc2.svg)](https://david-dm.org/homebridge-nhc2/homebridge-nhc2)
 [![Gitter chat](https://badges.gitter.im/homebridge-nhc2/community.png)](https://gitter.im/homebridge-nhc2/community)
 
