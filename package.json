@@ -1,6 +1,6 @@
 {
 	"name": "@homebridge-nhc2/homebridge-nhc2",
-	"version": "2.0.0-2",
+	"version": "2.0.0",
 	"description": "Niko Home Control 2 support for Homebridge",
 	"license": "MIT",
 	"keywords": [
