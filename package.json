@@ -26,7 +26,7 @@
 	],
 	"dependencies": {
 		"@types/node": "^13.13.4",
-		"nhc2-hobby-api": "file:../../../../usr/local/lib/node_modules/nhc2-hobby-api",
+		"@homebridge-nhc2/nhc2-hobby-api": "^2.0.1",
 		"rxjs": "^6.5.5",
 		"typescript": "^3.8.3"
 	},
