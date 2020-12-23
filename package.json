@@ -1,6 +1,6 @@
 {
-	"name": "homebridge-nhc2",
-	"version": "1.5.1",
+	"name": "@homebridge-nhc2/homebridge-nhc2",
+	"version": "2.0.0",
 	"description": "Niko Home Control 2 support for Homebridge",
 	"license": "MIT",
 	"keywords": [
@@ -10,10 +10,10 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "git://github.com/wvanvlaenderen/homebridge-nhc2.git"
+		"url": "git://github.com/homebridge-nhc2/homebridge-nhc2.git"
 	},
 	"bugs": {
-		"url": "https://github.com/wvanvlaenderen/homebridge-nhc2/issues"
+		"url": "https://github.com/homebridge-nhc2/homebridge-nhc2/issues"
 	},
 	"engines": {
 		"node": ">=11.0.0",
@@ -26,7 +26,7 @@
 	],
 	"dependencies": {
 		"@types/node": "^13.13.4",
-		"nhc2-hobby-api": "^1.1.0",
+		"@homebridge-nhc2/nhc2-hobby-api": "^2.0.1",
 		"rxjs": "^6.5.5",
 		"typescript": "^3.8.3"
 	},
