@@ -159,6 +159,6 @@ Travis CI will recognize the tagged commit and publish the package to npmjs.
     npm version 2.0.0
 ```
 
-Please make sure your released version is supported by HOOBS, you can run HOOBS as a docker container for testing purposes.
+Please make sure your released version is supported by [HOOBS](https://hoobs.org/), you can run HOOBS as a docker container for testing purposes.
 
 ```docker run -p 8080:80 hoobs/hoobs```
