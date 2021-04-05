@@ -1,3 +1,6 @@
+import { Device } from "@homebridge-nhc2/nhc2-hobby-api/lib/event/device";
+import { Event } from "@homebridge-nhc2/nhc2-hobby-api/lib/event/event";
+import { NHC2 } from "@homebridge-nhc2/nhc2-hobby-api/lib/NHC2";
 import {
   API,
   APIEvent,
@@ -12,9 +15,6 @@ import {
   PlatformConfig,
   Service,
 } from "homebridge";
-import { Device } from "nhc2-hobby-api/lib/event/device";
-import { Event } from "nhc2-hobby-api/lib/event/event";
-import { NHC2 } from "nhc2-hobby-api/lib/NHC2";
 
 import { NHC2Logger } from "./nhc2-logger";
 
@@ -37,6 +37,7 @@ class NHC2Platform implements DynamicPlatformPlugin {
     .Characteristic;
 
   private readonly accessories: PlatformAccessory[] = [];
+  private readonly suppressedAccessories: string[] = [];
   private readonly nhc2: NHC2;
 
   private readonly log: NHC2Logger;
@@ -47,7 +48,13 @@ class NHC2Platform implements DynamicPlatformPlugin {
     private api: API,
   ) {
     this.log = new NHC2Logger(logger, config);
-
+    this.suppressedAccessories = config.suppressedAccessories || [];
+    if (this.suppressedAccessories) {
+      this.log.info("Suppressing accessories: ");
+      this.suppressedAccessories.forEach(acc => {
+        this.log.info("  - " + acc);
+      });
+    }
     this.nhc2 = new NHC2("mqtts://" + config.host, {
       port: config.port || 8884,
       clientId: config.clientId || "NHC2-homebridge",
@@ -124,7 +131,10 @@ class NHC2Platform implements DynamicPlatformPlugin {
 
     Object.keys(mapping).forEach(model => {
       const config = mapping[model];
-      const accs = accessories.filter(acc => acc.Model === model);
+      const accs = accessories.filter(
+        acc =>
+          !this.suppressedAccessories.includes(acc.Uuid) && acc.Model === model,
+      );
       accs.forEach(acc => {
         const newAccessory = new Accessory(acc.Name as string, acc.Uuid);
         const newService = new config.service(acc.Name);
@@ -247,10 +257,10 @@ class NHC2Platform implements DynamicPlatformPlugin {
   private processDeviceProperties(device: Device, service: Service) {
     if (!!device.Properties) {
       device.Properties.forEach(property => {
-        if (property.Status === "On") {
+        if (property.Status === "On" || property.BasicState === "On") {
           service.getCharacteristic(this.Characteristic.On).updateValue(true);
         }
-        if (property.Status === "Off") {
+        if (property.Status === "Off" || property.BasicState === "Off") {
           service.getCharacteristic(this.Characteristic.On).updateValue(false);
         }
         if (!!property.Brightness) {
