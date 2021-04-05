@@ -287,15 +287,22 @@ class NHC2Platform implements DynamicPlatformPlugin {
             .updateValue(property.Brightness);
         }
         if (!! property.Position) {
+          let moving = device.Properties?.find(p => p.Moving)?.Moving == "True";
           service
             .getCharacteristic(this.Characteristic.CurrentPosition)
             .updateValue(parseInt(property.Position));
-        }
-        if (!! property.Moving) {
+
           service
             .getCharacteristic(this.Characteristic.PositionState)
-            .updateValue(property.Moving == "True" ? 1 : 2);
-          /* TODO: find a way to determing INCREASING=1 or DECREASING=0 */
+            .updateValue(moving ? 1 : 2);
+            /* TODO: find a way to determing INCREASING=1 or DECREASING=0 */
+
+          if (!moving) {
+            service
+              .getCharacteristic(this.Characteristic.TargetPosition)
+              .updateValue(parseInt(property.Position));
+          }
+
         }
       });
     }
