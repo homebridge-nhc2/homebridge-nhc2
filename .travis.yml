@@ -1,5 +1,14 @@
 language: node_js
 node_js:
-  - "node"
+- node
 os:
-  - linux
+- linux
+deploy:
+  provider: npm
+  skip_cleanup: true
+  on:
+    tags: true
+    branch: master
+  email: wvanvlaenderen@gmail.com
+  api_key:
+    secure: OGegrb40+WTR8NghRN94lw7c2y/8EWhROn/9Q3PBBuDPqB2ypFqRTpp2nTFXQhJ+Ge2L4v3YkzUrf/SDnegIfel2uxV3EKstg0R85Zg4/yrutL99IUTU5QjKlwCyng2MSmLDVcxLNtw8dH1a5TiH8+k8ppHChx2caaJZyaoE2r+uf47gVFsSMOJvvQSjlEncRiUVeSNzTiTYUqGD2GH+ZmsbTqMNKj4ziL+HfIJ2BBcjOc2jDQ6tuYN5OCfhOADUbJDPFrSgkTxNsRDFNJs6eCAAXT2e6a/39wtBqbOib1Cm/5jQ6X6xaPdQV0i0bVfdIwA1kpCPBzJCVi93UJz+JWkJ1pjyd8Lts6RZ5lAHVJ6j2kNioZjL16+2olQD7mCfwAfRcEsjkLGO8Ft6/G4t4I3NL/nqASjrQZ2C9nLDZgd03Zs21ogRCvYnsfkfee1nlFOtCxmX2uh0zjICOo7TomGOKjaLNgFi53K849bkaFwx1FodSERqS8UyDrt8OguDESydzfCImaqMIN4JZKLN7qB8nJU6XQO7G0HOp5AXWQzRe1mIKUz0z2nF+mMiTs6OGyAwWwdpvjtc58N9DfjHNoSsmXzEMp1m8KZNe2VLPuZH22Vfpkl5kHAYJ30ubQ+QSzSmt29TsOifbelhs77DpO7wrZH7EEl2/i6T6e3vxAI=
